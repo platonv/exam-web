@@ -12,8 +12,8 @@
 </head>
 <body>
     <form action="document" method="post">
-        key: <input type="title" name="title"> <br>
-        value: <input type="listOfTemplates" name="listOfTemplates"> <br>
+        title: <input type="title" name="title"> <br>
+        templates: <input type="listOfTemplates" name="listOfTemplates"> <br>
         <input type="submit" value="Add">
     </form>
 </body>
