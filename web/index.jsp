@@ -9,6 +9,7 @@
 <html>
   <head>
     <title>Index</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
   </head>
   <body>
   <a href="addKeyword.jsp">Add keyword</a> <a href="addTemplate.jsp">Add template</a> <a href="addDocument.jsp">Add Document</a>
@@ -16,26 +17,24 @@
   <button onClick="searchDocuments()">
       Search documents
   </button>
+  <table id="documentsTable">
+  </table>
+
   <script>
-      $(document).ready(function() {
-          document.getElementById("lastFilter").innerHTML = 'Last filter: ' + localStorage.filter;
-          getBooks();
-      });
-      function getBooks() {
-          var query = $('#queryInput').val();
-          localStorage.setItem('filter', query);
-          $('#booksTable').empty();
+      function searchDocuments() {
+          var query = $('#queryTitle').val();
+          $('#documentsTable').empty();
           $.ajax({
-              url: "api/books.php?query=" + query,
+              url: "/document?title=" + query,
               success: function(result) {
-                  var obj = jQuery.parseJSON(result);
-                  $.each(obj, function(key, value) {
-                      var id = value['id'];
+                  console.log(result);
+//                  var obj = jQuery.parseJSON(result);
+//                  console.log(result);
+                  $.each(result, function(key, value) {
+                      console.log(value);
                       var title = value['title'];
-                      var author = value['author'];
-                      var genre = value['genre'];
-                      var pages = value['pages'];
-                      $('#booksTable').append('<tr class="row"> <div class="cell"> <td><input class="theInput" type="text" value="' + title + '" readonly></td><td><input class="theInput" type="text" value="' + author + '" readonly></td><td><input class="theInput" type="text" value="' + genre + '" readonly></td><td><input class="theInput" type="text" value="' + pages + '" readonly></td></div><td class="special"><button type="button" class="update" onclick="updateBook(' + id + ')">Update</button></td><td class="special"><button type="button" class="delete" onClick="deleteBook(' + id + ')">Delete</button></td></tr>');
+                      console.log(title);
+                      $('#documentsTable').append('<tr><td>' + title + '</td></tr>');
                   });
               },
               error: function(err) {
@@ -43,26 +42,6 @@
               }
           });
       }
-      function addBook() {
-          console.log('adding id ')
-          window.location = "add.php";
-      }
-      function deleteBook(id) {
-          $.ajax({
-              url: "api/delete.php",
-              type: 'POST',
-              data: {"id": id},
-              success: function(result) {
-                  location.reload();
-              }
-          });
-      }
-      function updateBook(id) {
-          console.log('updating id ' + id)
-          window.location = "update.php?id=" + id;
-      }
   </script>
-
-
   </body>
 </html>
