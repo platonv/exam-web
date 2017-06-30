@@ -16,13 +16,11 @@ public class TemplateServlet extends HttpServlet {
     TemplateDAL templateDAL = new TemplateDAL();
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        int id = Integer.parseInt(request.getParameter("id"));
         String name = request.getParameter("name");
         String textContent = request.getParameter("textContent");
         int priv = Integer.parseInt(request.getParameter("private"));
 
         Template template = new Template();
-        template.id = id;
         template.name = name;
         template.textContent = textContent;
         template.priv = priv;

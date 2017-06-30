@@ -39,11 +39,10 @@ public class TemplateDAL extends DALBase {
         try {
             Connection con = getConnection();
             PreparedStatement ps=con.prepareStatement(
-                    "insert into template(id, name, textContent, private) values(?,?,?, ?)");
-            ps.setInt(1, template.id);
-            ps.setString(2, template.name);
-            ps.setString(3, template.textContent);
-            ps.setInt(4, template.priv);
+                    "insert into template(name, textContent, private) values(?,?, ?)");
+            ps.setString(1, template.name);
+            ps.setString(2, template.textContent);
+            ps.setInt(3, template.priv);
             status=ps.executeUpdate();
         }catch(Exception e){System.out.println(e);}
         return status;

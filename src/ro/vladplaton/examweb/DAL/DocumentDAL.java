@@ -1,5 +1,6 @@
 package ro.vladplaton.examweb.DAL;
 
+import ro.vladplaton.examweb.model.Document;
 import ro.vladplaton.examweb.model.Template;
 
 import java.sql.Connection;
@@ -13,19 +14,18 @@ import java.util.List;
  */
 public class DocumentDAL extends DALBase {
 
-    public List<Template> findAll() {
-        List<Template> list = new ArrayList<>();
+    public List<Document> findAll() {
+        List<Document> list = new ArrayList<>();
         try {
             Connection con = getConnection();
-            PreparedStatement ps = con.prepareStatement("select * from template");
+            PreparedStatement ps = con.prepareStatement("select * from document");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                Template template = new Template();
-                template.id = rs.getInt("id");
-                template.name = rs.getString("name");
-                template.textContent = rs.getString("textContent");
-                template.priv = rs.getInt("private");
-                list.add(template);
+                Document document = new Document();
+                document.id = rs.getInt("id");
+                document.title = rs.getString("title");
+                document.listOfTemplates = rs.getString("listOfTemplates");
+                list.add(document);
             }
         } catch (Exception e) {
             System.out.println(e);
@@ -33,16 +33,14 @@ public class DocumentDAL extends DALBase {
         return list;
     }
 
-    public int save(Template template){
+    public int save(Document document){
         int status=0;
         try {
             Connection con = getConnection();
             PreparedStatement ps=con.prepareStatement(
-                    "insert into template(id, name, textContent, private) values(?,?,?, ?)");
-            ps.setInt(1, template.id);
-            ps.setString(2, template.name);
-            ps.setString(3, template.textContent);
-            ps.setInt(4, template.priv);
+                    "insert into document(title, listOfTemplates) values(?,?)");
+            ps.setString(1, document.title);
+            ps.setString(2, document.listOfTemplates);
             status=ps.executeUpdate();
         }catch(Exception e){System.out.println(e);}
         return status;

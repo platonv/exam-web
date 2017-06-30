@@ -42,10 +42,9 @@ public class KeywordDAL extends DALBase {
         try {
             Connection con = getConnection();
             PreparedStatement ps=con.prepareStatement(
-                    "insert into keyword(id, k, value) values(?,?,?)");
-            ps.setInt(1, keyword.id);
-            ps.setString(2, keyword.key);
-            ps.setString(3, keyword.value);
+                    "insert into keyword(k, value) values(?,?)");
+            ps.setString(1, keyword.key);
+            ps.setString(2, keyword.value);
             status=ps.executeUpdate();
         }catch(Exception e){System.out.println(e);}
         return status;

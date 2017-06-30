@@ -16,12 +16,10 @@ public class KeywordServlet extends HttpServlet {
     KeywordDAL keywordDAL = new KeywordDAL();
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        int id = Integer.parseInt(request.getParameter("id"));
         String key = request.getParameter("key");
         String value = request.getParameter("value");
 
         Keyword keyword = new Keyword();
-        keyword.id = id;
         keyword.key = key;
         keyword.value = value;
 
