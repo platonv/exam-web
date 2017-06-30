@@ -27,13 +27,8 @@
           $.ajax({
               url: "/document?title=" + query,
               success: function(result) {
-                  console.log(result);
-//                  var obj = jQuery.parseJSON(result);
-//                  console.log(result);
                   $.each(result, function(key, value) {
-                      console.log(value);
                       var title = value['title'];
-                      console.log(title);
                       $('#documentsTable').append('<tr><td>' + title + '</td></tr>');
                   });
               },
